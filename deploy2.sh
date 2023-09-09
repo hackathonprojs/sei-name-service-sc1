@@ -1,0 +1,1 @@
+seid tx wasm store artifacts/counter.wasm -y --from=admin --chain-id=atlantic-2 --gas=1200000 --fees=120000usei --broadcast-mode=block --node=https://sei-testnet-rpc.polkachu.com/

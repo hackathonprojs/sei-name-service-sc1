@@ -1,0 +1,1 @@
+seid tx wasm instantiate 2783 '{"count": 0}' --from admin --broadcast-mode=block --label "counter" --chain-id atlantic-2 --gas=300000 --fees=30000usei --admin=sei1k826ve3lf0h6xyvvp3fhjnefaagv873xasgzag -y --node=https://sei-testnet-rpc.polkachu.com/
