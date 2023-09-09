@@ -4,6 +4,9 @@ const { exec } = require('child_process');
 const app = express();
 const PORT = 3000;
 
+// Serve static files from the "public" folder
+app.use(express.static('public'));
+
 // Define a route for handling the GET request on "/sei_req_reset"
 app.get('/sei_req_reset', (req, res) => {
   // Execute the Bash script when a GET request is received on "/sei_req_reset"
