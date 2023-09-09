@@ -1,1 +1,1 @@
-seid q wasm contract-state smart sei1gwlf9lmgscz92mk0vt6zmhawnjf887nuxekvlc7qxgzgcua2vrtsp2kqgh '{"get_count":{}}' --node=https://sei-testnet-rpc.polkachu.com/
+seid q wasm contract-state smart sei1pr5nkrx2fg7htwff4ztsfeg5l4nwg4zlg8zdj2k3h7z4k7cqr3ms6cn8d5 '{"get_count":{}}' --node=https://sei-testnet-rpc.polkachu.com/

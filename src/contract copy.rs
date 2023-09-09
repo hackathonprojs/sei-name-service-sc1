@@ -19,7 +19,7 @@ pub fn instantiate(
     msg: InstantiateMsg,
 ) -> Result<Response, ContractError> {
     let state = State {
-        count: msg.count.clone(),
+        count: msg.count,
         owner: info.sender.clone(),
     };
     set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
@@ -28,7 +28,7 @@ pub fn instantiate(
     Ok(Response::new()
         .add_attribute("method", "instantiate")
         .add_attribute("owner", info.sender)
-        .add_attribute("count", msg.count))
+        .add_attribute("count", msg.count.to_string()))
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -56,7 +56,7 @@ pub mod execute {
     //     Ok(Response::new().add_attribute("action", "increment"))
     // }
 
-    pub fn reset(deps: DepsMut, info: MessageInfo, count: String) -> Result<Response, ContractError> {
+    pub fn reset(deps: DepsMut, info: MessageInfo, count: i32) -> Result<Response, ContractError> {
         STATE.update(deps.storage, |mut state| -> Result<_, ContractError> {
             if info.sender != state.owner {
                 return Err(ContractError::Unauthorized {});
@@ -94,7 +94,7 @@ mod tests {
     fn proper_initialization() {
         let mut deps = mock_dependencies();
 
-        let msg = InstantiateMsg { count: "17".to_string() }; // Initialize count as a String
+        let msg = InstantiateMsg { count: 17 };
         let info = mock_info("creator", &coins(1000, "earth"));
 
         // we can just call .unwrap() to assert this was a success
@@ -104,14 +104,14 @@ mod tests {
         // it worked, let's query the state
         let res = query(deps.as_ref(), mock_env(), QueryMsg::GetCount {}).unwrap();
         let value: GetCountResponse = from_binary(&res).unwrap();
-        assert_eq!("17".to_string(), value.count); // Ensure count is a String
+        assert_eq!(17, value.count);
     }
 
     //#[test]
     // fn increment() {
     //     let mut deps = mock_dependencies();
 
-    //     let msg = InstantiateMsg { count: "17".to_string() }; // Initialize count as a String
+    //     let msg = InstantiateMsg { count: 17 };
     //     let info = mock_info("creator", &coins(2, "token"));
     //     let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
 
@@ -123,20 +123,20 @@ mod tests {
     //     // should increase counter by 1
     //     let res = query(deps.as_ref(), mock_env(), QueryMsg::GetCount {}).unwrap();
     //     let value: GetCountResponse = from_binary(&res).unwrap();
-    //     assert_eq!("18".to_string(), value.count); // Ensure count is a String
+    //     assert_eq!(18, value.count);
     // }
 
     #[test]
     fn reset() {
         let mut deps = mock_dependencies();
 
-        let msg = InstantiateMsg { count: "17".to_string() }; // Initialize count as a String
+        let msg = InstantiateMsg { count: 17 };
         let info = mock_info("creator", &coins(2, "token"));
         let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
 
         // beneficiary can release it
         let unauth_info = mock_info("anyone", &coins(2, "token"));
-        let msg = ExecuteMsg::Reset { count: "5".to_string() }; // Reset count as a String
+        let msg = ExecuteMsg::Reset { count: 5 };
         let res = execute(deps.as_mut(), mock_env(), unauth_info, msg);
         match res {
             Err(ContractError::Unauthorized {}) => {}
@@ -145,12 +145,12 @@ mod tests {
 
         // only the original creator can reset the counter
         let auth_info = mock_info("creator", &coins(2, "token"));
-        let msg = ExecuteMsg::Reset { count: "5".to_string() }; // Reset count as a String
+        let msg = ExecuteMsg::Reset { count: 5 };
         let _res = execute(deps.as_mut(), mock_env(), auth_info, msg).unwrap();
 
         // should now be 5
         let res = query(deps.as_ref(), mock_env(), QueryMsg::GetCount {}).unwrap();
         let value: GetCountResponse = from_binary(&res).unwrap();
-        assert_eq!("5".to_string(), value.count); // Ensure count is a String
+        assert_eq!(5, value.count);
     }
 }
