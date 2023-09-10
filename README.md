@@ -12,7 +12,6 @@
 1. first call 
   ./deploy2.sh
 find the initialization code, change it on deploy3.sh
-
 2.  ./deploy3.sh
 find the contract address and update the contract on the following scripts.
 
@@ -20,8 +19,7 @@ find the contract address and update the contract on the following scripts.
 
 3.  ./getname.sh
 call this script to get name stored into this contract.
-
-5.  ./reset.sh
+4.  ./reset.sh
 call this script to change the name associated with the owner/sender of the contract.  
 
 
