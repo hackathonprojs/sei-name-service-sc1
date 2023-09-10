@@ -27,5 +27,5 @@ call this script to change the name associated with the owner/sender of the cont
 
 
 ## Contract already deployed
-sei1pr5nkrx2fg7htwff4ztsfeg5l4nwg4zlg8zdj2k3h7z4k7cqr3ms6cn8d5 
-on testnet atlantic-2
+`sei1pr5nkrx2fg7htwff4ztsfeg5l4nwg4zlg8zdj2k3h7z4k7cqr3ms6cn8d5` 
+on testnet `atlantic-2`
